@@ -1,4 +1,4 @@
-import { getUsers, createUser, updateUser, deleteUser } from "./controllers.js"
+import { getUsers, createUser, updateUser, deleteUser, getUsersAll } from "./controllers.js"
 
 // add juancito juan@gmail.com aguanteelddl
 const argv = process.argv
@@ -8,7 +8,10 @@ let resultado
 
 switch (operacion) {
   case "get":
-    resultado = await getUsers()
+    resultado = await getUsers(params[1])
+    break
+  case "getAll":
+    resultado = await getUsersAll()
     break
   case "add":
     // createUser("juancito", "juan@gmail.com", "megustaelddl")
