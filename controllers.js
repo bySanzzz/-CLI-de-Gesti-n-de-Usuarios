@@ -3,9 +3,15 @@ import { db } from "./config.js"
 //En vez de darle toda mi BD a el usuario le consulto por cual Id esta buscando para mandarselo, con la idea de que si tenemos millones de usuarios no poner todos
 
 const getUsers = async (id) => {
+  
   const q = `SELECT * FROM users WHERE id = ?;`
   const [response] = await db.query(q, [id])
+  if (response.length === 0) {
+  return "No se encontró el usuario"
+  }
+
   return response
+  
 }
 //Aun asi, mantengo mi GetUsers pero con la idea de utilizarlo en tablas pequeñas
 const getUsersAll = async () => {
@@ -15,7 +21,6 @@ const getUsersAll = async () => {
 }
 
 const createUser = async (username, email, password) => {
-  
 
   if (!username || !email || !password ) {
     return "Data invalida, necesitas enviar username, email y password para registrar un usuario."
@@ -61,7 +66,11 @@ const updateUser = async (id, updates) => {
   
   const [response] = await db.query(q, [username, email, password, id])
 
-  return "Usuario actualizado exitosamente";
+  if (response.affectedRows === 1) {
+    return "Usuario actualizado correctamente"
+  } else {
+    return "No se encontro el Usuario con el ID ingresado"
+  }
 }
 
 const deleteUser = async (id) => {
