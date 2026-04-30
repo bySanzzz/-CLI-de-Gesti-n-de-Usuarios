@@ -9,11 +9,10 @@ const getUsers = async (id) => {
   if (response.length === 0) {
   return "No se encontró el usuario"
   }
-
   return response
   
 }
-//Aun asi, mantengo mi GetUsers pero con la idea de utilizarlo en tablas pequeñas
+//Aun asi, mantengo mi GetUsers pero con la idea de utilizarlo en tablas pequeñas de no tantos usuarios
 const getUsersAll = async () => {
   const q = `SELECT * FROM users`
   const [response] = await db.query(q)
@@ -22,6 +21,7 @@ const getUsersAll = async () => {
 
 const createUser = async (username, email, password) => {
 
+  //Precisa que nosotros le enviemos user, email y una contraseña
   if (!username || !email || !password ) {
     return "Data invalida, necesitas enviar username, email y password para registrar un usuario."
   }
@@ -46,6 +46,7 @@ const createUser = async (username, email, password) => {
   }
 }
 
+//Actualizar usuarios
 const updateUser = async (id, updates) => {
   
   const { username, email, password } = updates;
@@ -73,6 +74,7 @@ const updateUser = async (id, updates) => {
   }
 }
 
+//Borrar users de la tabla 
 const deleteUser = async (id) => {
   const q = `DELETE from users WHERE id = ?;`
   const [response] = await db.query(q, [id]);

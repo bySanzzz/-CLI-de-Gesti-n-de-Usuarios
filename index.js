@@ -1,9 +1,11 @@
 import { getUsers, createUser, updateUser, deleteUser, getUsersAll } from "./controllers.js"
 
-// add juancito juan@gmail.com aguanteelddl
+
 const argv = process.argv
 const params = argv.slice(2)
 const operacion = params[0]
+
+//Tabla de comandos
 const mensaje = `
 ╔══════════════════════════════════════════════╗
 ║        CLI Gestión de Usuarios               ║
@@ -21,6 +23,8 @@ const mensaje = `
 `
 let resultado
 
+
+//operaciones del Cli
 switch (operacion) {
   case "get":
     resultado = await getUsers(params[1])
@@ -29,7 +33,6 @@ switch (operacion) {
     resultado = await getUsersAll()
     break
   case "add":
-    // createUser("juancito", "juan@gmail.com", "megustaelddl")
     resultado = await createUser(params[1], params[2], params[3])
     break
   case "update":
