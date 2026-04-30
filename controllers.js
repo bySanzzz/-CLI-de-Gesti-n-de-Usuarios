@@ -17,7 +17,7 @@ const getUsersAll = async () => {
 const createUser = async (username, email, password) => {
   
 
-  if (!username || !email || !password) {
+  if (!username || !email || !password ) {
     return "Data invalida, necesitas enviar username, email y password para registrar un usuario."
   }
 
@@ -42,17 +42,25 @@ const createUser = async (username, email, password) => {
 }
 
 const updateUser = async (id, updates) => {
+  
+  const { username, email, password } = updates;
+  
   if (!id) {
     return "ID requerido"
   }
+  //Modifico la condicion, en donde mi correo debete contener un @ y terminar con ".com (permitiendo utilizar tango gmail, hotmail, entre otros)" 
+  if (!email.includes("@") || !email.endsWith(".com")) {
+    return "El correo electrónico esta incompleto"
+  }
+  // Anchura minima de contraseña tiene que ser minimo de 6 caracteres
+  if (password.length <= 5){
+    return "Necesitas que tu contraseña tenga al menos 6 caracteres"
+  }
 
   const q = `UPDATE users SET username = ?, email = ?, password = ? WHERE id = ?`
-  const { username, email, password } = updates;
+  
   const [response] = await db.query(q, [username, email, password, id])
 
-  if (response.affectedRows === 0) {
-    return "Usuario no encontrado";
-  }
   return "Usuario actualizado exitosamente";
 }
 
@@ -60,9 +68,12 @@ const deleteUser = async (id) => {
   const q = `DELETE from users WHERE id = ?;`
   const [response] = await db.query(q, [id]);
 
-  //Cant.  de filas modificadas o afectadas, si es igual a 1 indica que se logro
+  
+  //Cant.  de filas modificadas o afectadas, si es igual a 1 indica que se logro, sino indica que no se encontro usuario
   if (response.affectedRows === 1) {
     return "Usuario/s eliminado/s"
+  } else {
+    return "No se encontro el Usuario con el ID ingresado"
   }
 }
 

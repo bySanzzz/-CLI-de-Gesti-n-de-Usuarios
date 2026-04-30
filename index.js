@@ -4,6 +4,21 @@ import { getUsers, createUser, updateUser, deleteUser, getUsersAll } from "./con
 const argv = process.argv
 const params = argv.slice(2)
 const operacion = params[0]
+const mensaje = `
+╔══════════════════════════════════════════════╗
+║        CLI Gestión de Usuarios               ║
+╠══════════════════════════════════════════════╣
+║                                              ║
+║ Comandos disponibles:                        ║
+║                                              ║
+║  add <username> <email> <password>           ║
+║  get <id>                                    ║
+║  getAll                                      ║
+║  update <username> <email> <password> <id>   ║
+║  delete <id>                                 ║
+║                                              ║
+╚══════════════════════════════════════════════╝
+`
 let resultado
 
 switch (operacion) {
@@ -26,6 +41,7 @@ switch (operacion) {
     break
   default:
     resultado = "Operación invalida."
+    console.log(mensaje)
 }
 
 const main = () => {

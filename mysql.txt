@@ -19,4 +19,4 @@ INSERT INTO users (id, username, email, password) VALUES
  npm run dev delete 891e560c-a5d0-4c28-89a5-37e926965b09
  npm run dev get
  npm run dev getAll
- 
+ npm run dev update upigupi upigupi@gmail.com nadanose 5
